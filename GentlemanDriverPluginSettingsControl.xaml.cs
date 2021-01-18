@@ -13,6 +13,7 @@ namespace sjdawson.GentlemanDriverPlugin
 
         public GentlemanDriverPluginSettingsControl()
         {
+            InitializeComponent();
         }
 
         public GentlemanDriverPluginSettingsControl(GentlemanDriverPlugin plugin) : this()
@@ -20,8 +21,14 @@ namespace sjdawson.GentlemanDriverPlugin
             this.Plugin = plugin;
         }
 
+        public void OptimalTyreTemperatureChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            Plugin.Settings.OptimalTyreTemperature = (int)OptimalTyreTemperature.Value;
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            OptimalTyreTemperature.Value = Plugin.Settings.OptimalTyreTemperature;
         }
     }
 }

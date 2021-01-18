@@ -6,14 +6,14 @@ namespace sjdawson.GentlemanDriverPlugin
 {
     [PluginDescription("Additional properties, actions and events for use in various racing games.")]
     [PluginAuthor("sjdawson")]
-    [PluginName("GentlemanDriverPlugin")]
+    [PluginName("Gentleman Driver Plugin")]
 
     public class GentlemanDriverPlugin: IPlugin, IDataPlugin, IWPFSettings
     {
         public GentlemanDriverPluginSettings Settings;
         public PluginManager PluginManager { get; set; }
 
-        // public Sections.Flags Flags;
+        public Sections.Laps Laps;
 
         /// <summary>
         /// Initialise the plugin preparing all settings, properties, events and triggers.
@@ -23,16 +23,19 @@ namespace sjdawson.GentlemanDriverPlugin
         {
             Settings = this.ReadCommonSettings<GentlemanDriverPluginSettings>("GentlemanDriverPluginSettings", () => new GentlemanDriverPluginSettings());
 
-            // Flags = new Sections.Flags(this);
+            Laps = new Sections.Laps(this);
         }
 
         /// <param name="pluginManager"></param>
         /// <param name="data"></param>
         public void DataUpdate(PluginManager pluginManager, ref GameData data)
         {
-            if (data.OldData != null && data.NewData != null)
-            {
-                // Lights.DataUpdate();
+            if (data.GameRunning)
+            {     
+                if (data.OldData != null && data.NewData != null)
+                {
+                    Laps.DataUpdate(ref data);
+                }
             }
         }
 

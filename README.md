@@ -8,7 +8,8 @@ This plugin for [SimHub](https://www.simhubdash.com/) adds properties, events an
 
 ### 0.0.1
 
-Initial release
+Initial pre-release
+- Adds `GentlemanDriver.Laps.StintTotal` property, showing the number of laps in your current stint
 
 ---
 
