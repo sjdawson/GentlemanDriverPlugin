@@ -1,1 +1,12 @@
-theme: minima
+remote_theme: chrisrhymes/bulma-clean-theme
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      show_sidebar: false
+      hide_hero: true
+      menubar: docs_menu
+      hide_footer: true
