@@ -2,6 +2,8 @@
 
 This plugin for [SimHub](https://www.simhubdash.com/) adds properties, events and actions for various racing games.
 
+Many of the properties available come from suggestions and ideas in the SimHub Discord.
+
 ---
 
 ## Changelog
@@ -9,7 +11,6 @@ This plugin for [SimHub](https://www.simhubdash.com/) adds properties, events an
 ### 0.0.1
 
 Initial pre-release
-- Adds `GentlemanDriver.Laps.StintTotal` property, showing the number of laps in your current stint
 
 ---
 

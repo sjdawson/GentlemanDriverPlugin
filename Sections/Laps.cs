@@ -23,11 +23,9 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         private int LapsStintTotal(GameData data)
         {
             if (data.NewData.IsInPitLane > 0)
-            {
-                this.LastOutLap = data.NewData.CurrentLap;
-            }
+                LastOutLap = data.NewData.CurrentLap;
 
-            return data.NewData.CurrentLap - this.LastOutLap;
+            return data.NewData.CurrentLap - LastOutLap;
         }
     }
 }

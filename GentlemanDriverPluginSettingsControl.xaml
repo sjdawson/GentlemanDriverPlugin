@@ -26,7 +26,7 @@
 
         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" Text="Optimal tyre temperature" Grid.Row="0" />
         <Custom:NumericUpDown x:Name="OptimalTyreTemperature" HasDecimals="False" Margin="5" ValueChanged="OptimalTyreTemperatureChanged" Grid.Row="0"
-                              ToolTip="The value at which your tyres are at their optimal temperature"
+                              ToolTip="The value at which your tyres are at their optimal temperature by default"
                               Width="300" HorizontalAlignment="Right"
                               Grid.Column="1" Minimum="0" Maximum="200"/>
     </Grid>

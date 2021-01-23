@@ -49,6 +49,10 @@ Section "MainSection" SEC01
   SetOutPath $INSTDIR
   SetOverwrite ifnewer
   File "..\..\sjdawson.GentlemanDriverPlugin.dll"
+  ; Add the various static information files
+  SetOutPath "$INSTDIR\PluginsData\F12020\sjdawson.GentlemanDriverPlugin\"
+  File "..\..\PluginsData\F12020\sjdawson.GentlemanDriverPlugin\ActualTyreCompound.json"
+  File "..\..\PluginsData\F12020\sjdawson.GentlemanDriverPlugin\VisualTyreCompound.json"
 SectionEnd
 
 Section -Post

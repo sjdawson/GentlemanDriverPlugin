@@ -14,6 +14,8 @@ namespace sjdawson.GentlemanDriverPlugin
         public PluginManager PluginManager { get; set; }
 
         public Sections.Laps Laps;
+        public Sections.TyreCompound TyreCompound;
+        public Sections.TyreTemps TyreTemps;
 
         /// <summary>
         /// Initialise the plugin preparing all settings, properties, events and triggers.
@@ -21,9 +23,11 @@ namespace sjdawson.GentlemanDriverPlugin
         /// <param name="pluginManager"></param>
         public void Init(PluginManager pluginManager)
         {
-            Settings = this.ReadCommonSettings<GentlemanDriverPluginSettings>("GentlemanDriverPluginSettings", () => new GentlemanDriverPluginSettings());
+            Settings = this.ReadCommonSettings("GentlemanDriverPluginSettings", () => new GentlemanDriverPluginSettings());
 
             Laps = new Sections.Laps(this);
+            TyreCompound = new Sections.TyreCompound(this);
+            TyreTemps = new Sections.TyreTemps(this);
         }
 
         /// <param name="pluginManager"></param>
@@ -35,6 +39,8 @@ namespace sjdawson.GentlemanDriverPlugin
                 if (data.OldData != null && data.NewData != null)
                 {
                     Laps.DataUpdate(ref data);
+                    TyreCompound.DataUpdate();
+                    TyreTemps.DataUpdate();
                 }
             }
         }
