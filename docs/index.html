@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>GentlemanDriverPlugin</title>
+    <link rel="stylesheet" href="https://unpkg.com/docute@4/dist/docute.css">
+    <link rel="icon" type="image/png" href="/images/helmet.png" />
+    <style>
+        /* Import desired font from Google fonts */
+        @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+        /* Apply the font to body (to override the default one) */
+        body {
+            font-family: Roboto, sans-serif;
+        }
+
+        .Root header.Header {
+            background-image: url('/GentlemanDriverPlugin/images/hero.jpg');
+            background-size: cover;
+            background-position-y: 50%;
+        }
+        .Root header.Header div {
+            background: transparent;
+        }
+
+        .page-content h2 { margin-top: 3rem !important; }
+
+        .gradient-example {
+            font-size: 0;
+        }
+
+        .gradient-example > span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+        }
+      </style>
+</head>
+<body>
+    <div id="docute"></div>
+    <script src="https://unpkg.com/docute@4/dist/docute.js"></script>
+    <script>
+        new Docute({
+            target: '#docute',
+            cssVariables: {
+                accentColor: '#3273dc',
+                headerBackground: '#111111',
+                headerTextColor: '#ffffff',
+                navLinkColor: '#ffffff',
+                pageBackground: '#fbfbfb',
+                textColor: '#111111',
+                inlineCodeBackground: '#011627',
+                inlineCodeColor: '#ffffff',
+                headerHeight: '100px',
+            },
+            nav: [
+                {
+                    title: 'GitHub',
+                    link: 'https://github.com/sjdawson/GentlemanDriverPlugin'
+                },
+            ],
+            sidebar: [
+                {
+                    title: 'GentlemanDriverPlugin',
+                    children: [
+                        {
+                            title: 'Introduction',
+                            link: '/'
+                        },
+                        {
+                            title: 'Installation',
+                            link: '/installation'
+                        },
+                        {
+                            title: 'Changelog',
+                            link: '/changelog'
+                        }
+                    ]
+                },
+                {
+                    title: 'Features',
+                    children: [
+                        {
+                            title: 'Laps',
+                            link: '/features/laps'
+                        },
+                        {
+                            title: 'Tyre compound',
+                            link: '/features/tyre-compound'
+                        },
+                        {
+                            title: 'Tyre temperature',
+                            link: '/features/tyre-temperature'
+                        },
+                    ]
+                }
+            ]
+        })
+    </script>
+</body>
+</html>
