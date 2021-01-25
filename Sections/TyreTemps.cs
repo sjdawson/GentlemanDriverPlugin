@@ -1,11 +1,12 @@
-﻿using System;
+﻿using GameReaderCommon;
+using System;
 using System.Collections.Generic;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class TyreTemps
+    public class TyreTemps : IGameExtension
     {
-        private readonly GentlemanDriverPlugin Base;
+        private GentlemanDriverPlugin Base;
 
         private int CurrentOptimalTemperature;
 
@@ -29,14 +30,14 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             "FrontLeft", "FrontRight", "RearLeft", "RearRight"
         };
 
-        public TyreTemps(GentlemanDriverPlugin gentlemanDriverPlugin)
+        public void Init(GentlemanDriverPlugin gentlemanDriverPlugin)
         {
             Base = gentlemanDriverPlugin;
             CurrentOptimalTemperature = Base.Settings.OptimalTyreTemps["Default"]["Default"];
 
             if (!Base.Settings.OptimalTyreTemps.ContainsKey(Base.PluginManager.GameName))
                 Base.Settings.OptimalTyreTemps.Add(
-                    Base.PluginManager.GameName, 
+                    Base.PluginManager.GameName,
                     new Dictionary<string, int> { { "Default", CurrentOptimalTemperature } }
                 );
 
@@ -63,6 +64,16 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
                     "Tyres.OptimalTyreTemperatureHex" + TyreTempToMonitor, 
                     GetOptimalTyreTemperatureHex("TyreTemperature" + TyreTempToMonitor)
                 );
+        }
+
+        public void DataUpdate(ref GameData data)
+        {
+            
+        }
+
+        public void End()
+        {
+            //dispose
         }
 
         private void ChangeOptimalTyreTemperature(int change)

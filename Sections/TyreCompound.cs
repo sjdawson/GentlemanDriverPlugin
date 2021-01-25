@@ -5,9 +5,9 @@ using System.IO;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class TyreCompound
+    public class TyreCompound : IGameExtension
     {
-        private readonly GentlemanDriverPlugin Base;
+        private GentlemanDriverPlugin Base;
 
         private Dictionary<int, string> ActualCompoundMap;
         private string ActualCompoundProperty;
@@ -15,20 +15,24 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         private Dictionary<int, string> VisualCompoundMap;
         private string VisualCompoundProperty;
 
-        public TyreCompound(GentlemanDriverPlugin gentlemanDriverPlugin)
+        public void DataUpdate(ref GameData data)
+        {
+            Base.SetProp("Tyres.ActualTyreCompound", ActualTyreCompound());
+            Base.SetProp("Tyres.VisualTyreCompound", VisualTyreCompound());
+        }
+
+        public void Init(GentlemanDriverPlugin gentlemanDriverPlugin)
         {
             Base = gentlemanDriverPlugin;
-
             LoadCompoundMaps();
 
             Base.AddProp("Tyres.ActualTyreCompound", false);
             Base.AddProp("Tyres.VisualTyreCompound", false);
         }
 
-        public void DataUpdate()
-        { 
-            Base.SetProp("Tyres.ActualTyreCompound", ActualTyreCompound());
-            Base.SetProp("Tyres.VisualTyreCompound", VisualTyreCompound());
+        public void End()
+        {
+            //dispose
         }
 
         private string ActualTyreCompound()
