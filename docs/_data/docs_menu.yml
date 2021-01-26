@@ -1,0 +1,12 @@
+- label: Getting started
+  items:
+    - name: Installation
+      link: /installation
+- label: Properties
+  items:
+    - name: Laps
+      link: /properties/laps
+    - name: Tyre Compounds
+      link: /properties/tyre-compounds
+    - name: Tyre Temperature
+      link: /properties/tyre-temperature
