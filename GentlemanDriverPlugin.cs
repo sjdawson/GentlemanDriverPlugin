@@ -15,7 +15,7 @@ namespace sjdawson.GentlemanDriverPlugin
         public GentlemanDriverPluginSettings Settings;
         public PluginManager PluginManager { get; set; }
 
-        public List<IGameExtension> GameExtensions = new List<IGameExtension>
+        public List<IPluginSection> pluginSections = new List<IPluginSection>
             {
                 new Laps(),
                 new TyreCompound(),
@@ -30,8 +30,8 @@ namespace sjdawson.GentlemanDriverPlugin
         {
             Settings = this.ReadCommonSettings("GentlemanDriverPluginSettings", () => new GentlemanDriverPluginSettings());
 
-            foreach (IGameExtension gameExtension in GameExtensions)
-                gameExtension.Init(this);
+            foreach (IPluginSection pluginSection in pluginSections)
+                pluginSection.Init(this);
         }
 
         /// <param name="pluginManager"></param>
@@ -42,8 +42,8 @@ namespace sjdawson.GentlemanDriverPlugin
             {     
                 if (data.OldData != null && data.NewData != null)
                 {
-                    foreach (IGameExtension gameExtension in GameExtensions)
-                        gameExtension.DataUpdate(ref data);
+                    foreach (IPluginSection pluginSection in pluginSections)
+                        pluginSection.DataUpdate(ref data);
                 }
             }
         }
@@ -52,8 +52,8 @@ namespace sjdawson.GentlemanDriverPlugin
         {
             this.SaveCommonSettings("GentlemanDriverPluginSettings", Settings);
 
-            foreach (IGameExtension gameExtension in GameExtensions)
-                gameExtension.End();
+            foreach (IPluginSection pluginSection in pluginSections)
+                pluginSection.End();
         }
 
         public System.Windows.Controls.Control GetWPFSettingsControl(PluginManager pluginManager) => new GentlemanDriverPluginSettingsControl(this);
