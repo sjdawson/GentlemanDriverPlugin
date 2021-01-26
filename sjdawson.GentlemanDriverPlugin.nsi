@@ -1,5 +1,5 @@
 !define PRODUCT_NAME "sjdawson.GentlemanDriverPlugin"
-!define PRODUCT_VERSION "v0.0.1"
+!define PRODUCT_VERSION "v1.0.0"
 !define PRODUCT_PUBLISHER "sjdawson"
 !define PRODUCT_WEB_SITE "https://github.com/sjdawson/gentlemandriverplugin"
 
