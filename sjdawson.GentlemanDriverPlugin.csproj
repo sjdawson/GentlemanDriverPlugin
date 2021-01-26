@@ -32,7 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GameReaderCommon">
-      <HintPath>..\..\..\SimHub\GameReaderCommon.dll</HintPath>
       <HintPath>..\..\..\..\..\SimHub\GameReaderCommon.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -46,13 +45,11 @@
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\log4net.dll</HintPath>
       <HintPath>..\..\..\..\..\SimHub\log4net.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\SimHub\MahApps.Metro.dll</HintPath>
       <HintPath>..\..\..\..\..\SimHub\MahApps.Metro.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -63,12 +60,10 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="SimHub.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SimHub.Logging.dll</HintPath>
       <HintPath>..\..\..\..\..\SimHub\SimHub.Logging.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="SimHub.Plugins">
-      <HintPath>..\..\..\SimHub\SimHub.Plugins.dll</HintPath>
       <HintPath>..\..\..\..\..\SimHub\SimHub.Plugins.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -87,6 +82,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPluginSection.cs" />
     <Compile Include="Sections\GameRunningDelayed.cs" />
     <Compile Include="Sections\TyreCompound.cs" />
     <Compile Include="Sections\TyreTemps.cs" />
