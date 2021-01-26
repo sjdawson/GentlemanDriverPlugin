@@ -3,13 +3,13 @@ using System;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class GameRunningDelayed
+    public class GameRunningDelayed : IPluginSection
     {
-        private readonly GentlemanDriverPlugin Base;
+        private GentlemanDriverPlugin Base;
 
         private DateTime Latch = DateTime.Now;
 
-        public GameRunningDelayed(GentlemanDriverPlugin gentlemanDriverPlugin)
+        public void Init(GentlemanDriverPlugin gentlemanDriverPlugin)
         {
             Base = gentlemanDriverPlugin;
 
@@ -24,6 +24,11 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         public void DataUpdate(ref GameData data)
         {
             Base.SetProp("GameRunning.Delayed05s", GameRunningDelayedCalc(data, 5000));
+        }
+
+        public void End()
+        {
+            //dispose
         }
 
         /// <summary>

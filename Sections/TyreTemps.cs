@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class TyreTemps : IGameExtension
+    public class TyreTemps : IPluginSection
     {
         private GentlemanDriverPlugin Base;
 

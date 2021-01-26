@@ -3,12 +3,10 @@ using SimHub.Plugins;
 
 namespace sjdawson.GentlemanDriverPlugin
 {
-    public interface IGameExtension
+    public interface IPluginSection
     {
         void Init(GentlemanDriverPlugin gentlemanDriverPlugin);
         void End();
         void DataUpdate(ref GameData data);
-
-
     }
 }

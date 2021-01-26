@@ -5,7 +5,7 @@ using System.IO;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class TyreCompound : IGameExtension
+    public class TyreCompound : IPluginSection
     {
         private GentlemanDriverPlugin Base;
 

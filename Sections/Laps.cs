@@ -2,7 +2,7 @@
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class Laps : IGameExtension
+    public class Laps : IPluginSection
     {
         private GentlemanDriverPlugin Base;
 
