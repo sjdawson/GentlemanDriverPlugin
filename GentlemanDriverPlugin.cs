@@ -1,6 +1,8 @@
 ﻿using GameReaderCommon;
 using SimHub.Plugins;
+using sjdawson.GentlemanDriverPlugin.Sections;
 using System;
+using System.Collections.Generic;
 
 namespace sjdawson.GentlemanDriverPlugin
 {
@@ -13,9 +15,13 @@ namespace sjdawson.GentlemanDriverPlugin
         public GentlemanDriverPluginSettings Settings;
         public PluginManager PluginManager { get; set; }
 
-        public Sections.Laps Laps;
-        public Sections.TyreCompound TyreCompound;
-        public Sections.TyreTemps TyreTemps;
+        public List<IPluginSection> pluginSections = new List<IPluginSection>
+            {
+                new Laps(),
+                new TyreCompound(),
+                new TyreTemps(),
+                new GameRunningDelayed()
+            };
 
         /// <summary>
         /// Initialise the plugin preparing all settings, properties, events and triggers.
@@ -25,9 +31,8 @@ namespace sjdawson.GentlemanDriverPlugin
         {
             Settings = this.ReadCommonSettings("GentlemanDriverPluginSettings", () => new GentlemanDriverPluginSettings());
 
-            Laps = new Sections.Laps(this);
-            TyreCompound = new Sections.TyreCompound(this);
-            TyreTemps = new Sections.TyreTemps(this);
+            foreach (IPluginSection pluginSection in pluginSections)
+                pluginSection.Init(this);
         }
 
         /// <param name="pluginManager"></param>
@@ -38,14 +43,19 @@ namespace sjdawson.GentlemanDriverPlugin
             {     
                 if (data.OldData != null && data.NewData != null)
                 {
-                    Laps.DataUpdate(ref data);
-                    TyreCompound.DataUpdate();
-                    TyreTemps.DataUpdate();
+                    foreach (IPluginSection pluginSection in pluginSections)
+                        pluginSection.DataUpdate(ref data);
                 }
             }
         }
 
-        public void End(PluginManager pluginManager) => this.SaveCommonSettings("GentlemanDriverPluginSettings", Settings);
+        public void End(PluginManager pluginManager)
+        {
+            this.SaveCommonSettings("GentlemanDriverPluginSettings", Settings);
+
+            foreach (IPluginSection pluginSection in pluginSections)
+                pluginSection.End();
+        }
         public System.Windows.Controls.Control GetWPFSettingsControl(PluginManager pluginManager) => new GentlemanDriverPluginSettingsControl(this);
 
         /// <summary>
