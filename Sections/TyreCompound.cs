@@ -14,20 +14,20 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         private Dictionary<int, string> VisualCompoundMap;
         private string VisualCompoundProperty;
-
-        public void DataUpdate(ref GameData data)
-        {
-            Base.SetProp("Tyres.ActualTyreCompound", ActualTyreCompound());
-            Base.SetProp("Tyres.VisualTyreCompound", VisualTyreCompound());
-        }
-
-        public void Init(GentlemanDriverPlugin gentlemanDriverPlugin)
+		
+		public void Init(GentlemanDriverPlugin gentlemanDriverPlugin)
         {
             Base = gentlemanDriverPlugin;
             LoadCompoundMaps();
 
             Base.AddProp("Tyres.ActualTyreCompound", false);
             Base.AddProp("Tyres.VisualTyreCompound", false);
+        }
+
+        public void DataUpdate(ref GameData data)
+        {
+            Base.SetProp("Tyres.ActualTyreCompound", ActualTyreCompound());
+            Base.SetProp("Tyres.VisualTyreCompound", VisualTyreCompound());
         }
 
         public void End()
