@@ -12,6 +12,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         {
             Base = gentlemanDriverPlugin;
 
+            Base.AddProp("Laps.PredictedLapTime", new TimeSpan());
             Base.AddProp("Laps.StintTotal", 0);
         }
 
