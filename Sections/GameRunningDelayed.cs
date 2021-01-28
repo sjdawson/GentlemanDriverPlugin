@@ -23,12 +23,12 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public void GameDataUpdate(ref GameData data)
         {
-            Base.SetProp("GameRunning.Delayed05s", GameRunningDelayedCalc(data, 5000));
+            
         }
 
         public void DataUpdate(ref GameData data)
         {
-            
+            Base.SetProp("GameRunning.Delayed05s", GameRunningDelayedCalc(data, 5000));
         }
 
         public void End()
