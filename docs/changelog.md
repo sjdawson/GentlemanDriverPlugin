@@ -1,5 +1,15 @@
 # Changelog
 
+---
+
+### `v1.0.1` GameRunningDelayed
+
+Adds the following new property
+
+- [Added property GameRunning.DelayedNNs](/features/game-running-delayed#game-running-delayed-by-n-seconds)
+
+---
+
 ### `v1.0.0` Primary release, additional properties and actions
 
 This bumps the plugin out of pre-release, and launches fully with the following

@@ -1,7 +1,7 @@
 !define PRODUCT_NAME "sjdawson.GentlemanDriverPlugin"
-!define PRODUCT_VERSION "v1.0.0"
+!define PRODUCT_VERSION "v1.0.1"
 !define PRODUCT_PUBLISHER "sjdawson"
-!define PRODUCT_WEB_SITE "https://github.com/sjdawson/gentlemandriverplugin"
+!define PRODUCT_WEB_SITE "https://sjdawson.github.io/GentlemanDriverPlugin"
 
 Function .onInit
     ReadRegStr $INSTDIR HKCU "SOFTWARE\SimHub" InstallDirectory
@@ -21,7 +21,7 @@ SetCompressor lzma
 !define MUI_FINISHPAGE_TEXT "Setup has finished installing ${PRODUCT_NAME}, you'll need to restart SimHub if it's currently running in order to have it pick up that the plugin has been installed."
 !define MUI_DIRECTORYPAGE_TEXT_DESTINATION "Choose your SimHub folder (where SimHubWPF.exe is located)."
 
-!define MUI_FINISHPAGE_SHOWREADME "https://github.com/sjdawson/gentlemandriverplugin/wiki"
+!define MUI_FINISHPAGE_SHOWREADME "https://sjdawson.github.io/GentlemanDriverPlugin/"
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "Open documentation and changelog?"
 
 ; Welcome page

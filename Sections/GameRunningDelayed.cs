@@ -7,18 +7,17 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
     {
         private GentlemanDriverPlugin Base;
 
-        private DateTime Latch = DateTime.Now;
+        // Removing an hour on init ensures all props stay false until a game has been running.
+        private DateTime Latch = DateTime.Now.AddHours(-1); 
+
+        private int[] LatchPeriods = {5, 10, 15, 20, 30, 60};
 
         public void Init(GentlemanDriverPlugin gentlemanDriverPlugin)
         {
             Base = gentlemanDriverPlugin;
 
-            Base.AddProp("GameRunning.Delayed05s", false);
-            Base.AddProp("GameRunning.Delayed10s", false);
-            Base.AddProp("GameRunning.Delayed15s", false);
-            Base.AddProp("GameRunning.Delayed20s", false);
-            Base.AddProp("GameRunning.Delayed25s", false);
-            Base.AddProp("GameRunning.Delayed30s", false);
+            foreach (int period in LatchPeriods)
+                Base.AddProp("GameRunning.Delayed" + period.ToString("D2") + "s", false);
         }
 
         public void GameDataUpdate(ref GameData data)
@@ -28,7 +27,8 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public void DataUpdate(ref GameData data)
         {
-            Base.SetProp("GameRunning.Delayed05s", GameRunningDelayedCalc(data, 5000));
+            foreach (int period in LatchPeriods)
+                Base.SetProp("GameRunning.Delayed" + period.ToString("D2") + "s", GameRunningDelayedCalc(data, period * 1000));
         }
 
         public void End()
@@ -41,9 +41,20 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         /// </summary>
         /// <param name="data">Game data to find out if game is running</param>
         /// <param name="milliseconds">Number of milliseconds to keep the value alive for</param>
-        private int GameRunningDelayedCalc(GameData data, int milliseconds)
+        private bool GameRunningDelayedCalc(GameData data, int milliseconds)
         {
-            return 4;
+            if (data.GameRunning)
+            {
+                Latch = DateTime.Now;
+                return true;
+            }
+
+            if (DateTime.Now.CompareTo(Latch.AddMilliseconds(milliseconds)) > 0)
+            {
+                return false;
+            }
+                
+            return true;
         }
     }
 }
