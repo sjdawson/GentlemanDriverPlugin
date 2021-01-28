@@ -16,6 +16,7 @@ namespace sjdawson.GentlemanDriverPlugin
         public Sections.Laps Laps;
         public Sections.TyreCompound TyreCompound;
         public Sections.TyreTemps TyreTemps;
+        public Sections.GameRunningDelayed GameRunningDelayed;
 
         /// <summary>
         /// Initialise the plugin preparing all settings, properties, events and triggers.
@@ -28,6 +29,7 @@ namespace sjdawson.GentlemanDriverPlugin
             Laps = new Sections.Laps(this);
             TyreCompound = new Sections.TyreCompound(this);
             TyreTemps = new Sections.TyreTemps(this);
+            GameRunningDelayed = new Sections.GameRunningDelayed(this);
         }
 
         /// <param name="pluginManager"></param>
@@ -35,7 +37,7 @@ namespace sjdawson.GentlemanDriverPlugin
         public void DataUpdate(PluginManager pluginManager, ref GameData data)
         {
             if (data.GameRunning)
-            {     
+            {
                 if (data.OldData != null && data.NewData != null)
                 {
                     Laps.DataUpdate(ref data);
@@ -43,6 +45,8 @@ namespace sjdawson.GentlemanDriverPlugin
                     TyreTemps.DataUpdate();
                 }
             }
+
+            GameRunningDelayed.DataUpdate(ref data);
         }
 
         public void End(PluginManager pluginManager) => this.SaveCommonSettings("GentlemanDriverPluginSettings", Settings);
