@@ -18,6 +18,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public void GameDataUpdate(ref GameData data)
         {
+			Base.SetProp("Laps.PredictedLapTime", PredictedLapTime(data));
             Base.SetProp("Laps.StintTotal", LapsStintTotal(data));
         }
 
@@ -33,6 +34,8 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
             return data.NewData.CurrentLap - LastOutLap;
         }
+		
+		private TimeSpan PredictedLapTime(GameData data) => data.NewData.BestLapTime.Add(TimeSpan.FromSeconds((double)Base.PluginManager.GetPropertyValue("PersistantTrackerPlugin.SessionBestLiveDeltaSeconds")));
 
         public void End()
         {
