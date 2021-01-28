@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class TyreTemps : IPluginSection
+    public class TyreTemps: IPluginSection
     {
         private GentlemanDriverPlugin Base;
 
@@ -55,7 +55,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             });
         }
 
-        public void GameDataUpdate(ref GameData data)
+        public void GameRunningDataUpdate(ref GameData data)
         {
             Base.SetProp("Tyres.OptimalTyreTemperature", GetOptimalTyreTemperature());
 
@@ -68,12 +68,12 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public void DataUpdate(ref GameData data)
         {
-            
+            // Do nothing
         }
 
         public void End()
         {
-            //dispose
+            // Do nothing
         }
 
         private void ChangeOptimalTyreTemperature(int change)

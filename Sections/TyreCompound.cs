@@ -5,7 +5,7 @@ using System.IO;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class TyreCompound : IPluginSection
+    public class TyreCompound: IPluginSection
     {
         private GentlemanDriverPlugin Base;
 
@@ -24,7 +24,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             Base.AddProp("Tyres.VisualTyreCompound", false);
         }
 
-        public void GameDataUpdate(ref GameData data)
+        public void GameRunningDataUpdate(ref GameData data)
         {
             Base.SetProp("Tyres.ActualTyreCompound", ActualTyreCompound());
             Base.SetProp("Tyres.VisualTyreCompound", VisualTyreCompound());
@@ -32,12 +32,12 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public void DataUpdate(ref GameData data)
         {
-
+            // Do nothing
         }
 
         public void End()
         {
-            //dispose
+            // Do nothing
         }
 
         private string ActualTyreCompound()
@@ -70,7 +70,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
                 : new Dictionary<int, string> { };
 
             // Set the properties that have the relevant map connection
-            switch (Base.PluginManager.GameName)        
+            switch (Base.PluginManager.GameName)
             {
                 case "F12020":
                     ActualCompoundProperty = "PlayerCarStatusData.m_actualTyreCompound";

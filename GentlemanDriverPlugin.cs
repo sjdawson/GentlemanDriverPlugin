@@ -16,12 +16,12 @@ namespace sjdawson.GentlemanDriverPlugin
         public PluginManager PluginManager { get; set; }
 
         public List<IPluginSection> pluginSections = new List<IPluginSection>
-            {
-                new Laps(),
-                new TyreCompound(),
-                new TyreTemps(),
-                new GameRunningDelayed()
-            };
+        {
+            new Laps(),
+            new TyreCompound(),
+            new TyreTemps(),
+            new GameRunningDelayed()
+        };
 
         /// <summary>
         /// Initialise the plugin preparing all settings, properties, events and triggers.
@@ -41,14 +41,11 @@ namespace sjdawson.GentlemanDriverPlugin
         {
             foreach (IPluginSection pluginSection in pluginSections)
                 pluginSection.DataUpdate(ref data);
+
             if (data.GameRunning)
-            {
                 if (data.OldData != null && data.NewData != null)
-                {
                     foreach (IPluginSection pluginSection in pluginSections)
-                        pluginSection.GameDataUpdate(ref data);
-                }
-            }
+                        pluginSection.GameRunningDataUpdate(ref data);
         }
 
         public void End(PluginManager pluginManager)
@@ -58,6 +55,7 @@ namespace sjdawson.GentlemanDriverPlugin
             foreach (IPluginSection pluginSection in pluginSections)
                 pluginSection.End();
         }
+
         public System.Windows.Controls.Control GetWPFSettingsControl(PluginManager pluginManager) => new GentlemanDriverPluginSettingsControl(this);
 
         /// <summary>

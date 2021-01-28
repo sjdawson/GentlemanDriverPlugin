@@ -3,12 +3,12 @@ using System;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class GameRunningDelayed : IPluginSection
+    public class GameRunningDelayed: IPluginSection
     {
         private GentlemanDriverPlugin Base;
 
         // Removing an hour on init ensures all props stay false until a game has been running.
-        private DateTime Latch = DateTime.Now.AddHours(-1); 
+        private DateTime Latch = DateTime.Now.AddHours(-1);
 
         private int[] LatchPeriods = {5, 10, 15, 20, 30, 60};
 
@@ -20,9 +20,9 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
                 Base.AddProp("GameRunning.Delayed" + period.ToString("D2") + "s", false);
         }
 
-        public void GameDataUpdate(ref GameData data)
+        public void GameRunningDataUpdate(ref GameData data)
         {
-            
+            // Do nothing
         }
 
         public void DataUpdate(ref GameData data)
@@ -33,7 +33,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public void End()
         {
-            //dispose
+            // Do nothing
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             {
                 return false;
             }
-                
+
             return true;
         }
     }

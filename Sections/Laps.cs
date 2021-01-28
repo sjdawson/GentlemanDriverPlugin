@@ -1,8 +1,9 @@
 ﻿using GameReaderCommon;
+using System;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class Laps : IPluginSection
+    public class Laps: IPluginSection
     {
         private GentlemanDriverPlugin Base;
 
@@ -16,7 +17,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             Base.AddProp("Laps.StintTotal", 0);
         }
 
-        public void GameDataUpdate(ref GameData data)
+        public void GameRunningDataUpdate(ref GameData data)
         {
             Base.SetProp("Laps.PredictedLapTime", PredictedLapTime(data));
             Base.SetProp("Laps.StintTotal", LapsStintTotal(data));
@@ -24,7 +25,12 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public void DataUpdate(ref GameData data)
         {
-            
+            // Do nothing
+        }
+
+        public void End()
+        {
+            // Do nothing
         }
 
         private int LapsStintTotal(GameData data)
@@ -34,12 +40,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
             return data.NewData.CurrentLap - LastOutLap;
         }
-		
-		private TimeSpan PredictedLapTime(GameData data) => data.NewData.BestLapTime.Add(TimeSpan.FromSeconds((double)Base.PluginManager.GetPropertyValue("PersistantTrackerPlugin.SessionBestLiveDeltaSeconds")));
 
-        public void End()
-        {
-            //dispose
-        }
+        private TimeSpan PredictedLapTime(GameData data) => data.NewData.BestLapTime.Add(TimeSpan.FromSeconds((double)Base.PluginManager.GetPropertyValue("PersistantTrackerPlugin.SessionBestLiveDeltaSeconds")));
     }
 }
