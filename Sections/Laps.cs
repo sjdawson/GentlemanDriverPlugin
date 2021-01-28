@@ -18,7 +18,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public void GameDataUpdate(ref GameData data)
         {
-			Base.SetProp("Laps.PredictedLapTime", PredictedLapTime(data));
+            Base.SetProp("Laps.PredictedLapTime", PredictedLapTime(data));
             Base.SetProp("Laps.StintTotal", LapsStintTotal(data));
         }
 
