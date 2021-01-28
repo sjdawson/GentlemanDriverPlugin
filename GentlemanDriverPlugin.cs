@@ -49,8 +49,6 @@ namespace sjdawson.GentlemanDriverPlugin
                         pluginSection.GameDataUpdate(ref data);
                 }
             }
-
-            GameRunningDelayed.DataUpdate(ref data);
         }
 
         public void End(PluginManager pluginManager)
