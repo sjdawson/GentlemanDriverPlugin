@@ -3,13 +3,13 @@ using System;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class Laps
+    public class Laps: IPluginSection
     {
-        private readonly GentlemanDriverPlugin Base;
+        private GentlemanDriverPlugin Base;
 
         private int LastOutLap = 0;
 
-        public Laps(GentlemanDriverPlugin gentlemanDriverPlugin)
+        public void Init(GentlemanDriverPlugin gentlemanDriverPlugin)
         {
             Base = gentlemanDriverPlugin;
 
@@ -17,10 +17,20 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             Base.AddProp("Laps.StintTotal", 0);
         }
 
-        public void DataUpdate(ref GameData data)
+        public void GameRunningDataUpdate(ref GameData data)
         {
             Base.SetProp("Laps.PredictedLapTime", PredictedLapTime(data));
             Base.SetProp("Laps.StintTotal", LapsStintTotal(data));
+        }
+
+        public void DataUpdate(ref GameData data)
+        {
+            // Do nothing
+        }
+
+        public void End()
+        {
+            // Do nothing
         }
 
         private int LapsStintTotal(GameData data)

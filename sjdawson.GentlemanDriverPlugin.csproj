@@ -82,6 +82,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPluginSection.cs" />
     <Compile Include="Sections\GameRunningDelayed.cs" />
     <Compile Include="Sections\TyreCompound.cs" />
     <Compile Include="Sections\TyreTemps.cs" />
