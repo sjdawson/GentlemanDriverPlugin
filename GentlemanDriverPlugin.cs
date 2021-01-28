@@ -39,12 +39,14 @@ namespace sjdawson.GentlemanDriverPlugin
         /// <param name="data"></param>
         public void DataUpdate(PluginManager pluginManager, ref GameData data)
         {
+            foreach (IPluginSection pluginSection in pluginSections)
+                pluginSection.DataUpdate(ref data);
             if (data.GameRunning)
             {     
                 if (data.OldData != null && data.NewData != null)
                 {
                     foreach (IPluginSection pluginSection in pluginSections)
-                        pluginSection.DataUpdate(ref data);
+                        pluginSection.GameDataUpdate(ref data);
                 }
             }
         }

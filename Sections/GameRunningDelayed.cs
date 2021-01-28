@@ -21,9 +21,14 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             Base.AddProp("GameRunning.Delayed30s", false);
         }
 
-        public void DataUpdate(ref GameData data)
+        public void GameDataUpdate(ref GameData data)
         {
             Base.SetProp("GameRunning.Delayed05s", GameRunningDelayedCalc(data, 5000));
+        }
+
+        public void DataUpdate(ref GameData data)
+        {
+            
         }
 
         public void End()

@@ -55,7 +55,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             });
         }
 
-        public void DataUpdate()
+        public void GameDataUpdate(ref GameData data)
         {
             Base.SetProp("Tyres.OptimalTyreTemperature", GetOptimalTyreTemperature());
 

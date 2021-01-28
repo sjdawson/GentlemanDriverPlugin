@@ -24,10 +24,15 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             Base.AddProp("Tyres.VisualTyreCompound", false);
         }
 
-        public void DataUpdate(ref GameData data)
+        public void GameDataUpdate(ref GameData data)
         {
             Base.SetProp("Tyres.ActualTyreCompound", ActualTyreCompound());
             Base.SetProp("Tyres.VisualTyreCompound", VisualTyreCompound());
+        }
+
+        public void DataUpdate(ref GameData data)
+        {
+
         }
 
         public void End()

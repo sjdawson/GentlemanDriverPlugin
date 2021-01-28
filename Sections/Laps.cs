@@ -15,9 +15,14 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             Base.AddProp("Laps.StintTotal", 0);
         }
 
-        public void DataUpdate(ref GameData data)
+        public void GameDataUpdate(ref GameData data)
         {
             Base.SetProp("Laps.StintTotal", LapsStintTotal(data));
+        }
+
+        public void DataUpdate(ref GameData data)
+        {
+            
         }
 
         private int LapsStintTotal(GameData data)
