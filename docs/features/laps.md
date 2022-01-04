@@ -27,3 +27,30 @@ lane)
 ```js
 $prop('GentlemanDriverPlugin.Laps.StintTotal')
 ```
+
+---
+
+### Last out lap
+
+The lap you last left the pits
+
+```ncalc
+[GentlemanDriverPlugin.Laps.LastOutLap]
+```
+```js
+$prop('GentlemanDriverPlugin.Laps.LastOutLap')
+```
+
+
+---
+
+### Last in lap
+
+The lap you last entered the pits
+
+```ncalc
+[GentlemanDriverPlugin.Laps.LastInLap]
+```
+```js
+$prop('GentlemanDriverPlugin.Laps.LastInLap')
+```
