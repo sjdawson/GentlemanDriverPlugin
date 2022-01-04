@@ -2,6 +2,15 @@
 
 ---
 
+### `v1.0.2` LastInLap/LastOutLap
+
+Adds the following new properties
+
+- [Added property Laps.LastInLap](/features/laps#last-in-lap)
+- [Added property Laps.LastOutLap](/features/laps#last-out-lap)
+
+---
+
 ### `v1.0.1` GameRunningDelayed
 
 Adds the following new property
