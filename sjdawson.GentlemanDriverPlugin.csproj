@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="IPluginSection.cs" />
     <Compile Include="Sections\GameRunningDelayed.cs" />
+    <Compile Include="Sections\Session.cs" />
     <Compile Include="Sections\TyreCompound.cs" />
     <Compile Include="Sections\TyreTemps.cs" />
     <Compile Include="Sections\Laps.cs" />

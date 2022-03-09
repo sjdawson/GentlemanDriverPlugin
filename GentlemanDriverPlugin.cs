@@ -18,6 +18,7 @@ namespace sjdawson.GentlemanDriverPlugin
         public List<IPluginSection> pluginSections = new List<IPluginSection>
         {
             new Laps(),
+            new Session(),
             new TyreCompound(),
             new TyreTemps(),
             new GameRunningDelayed()

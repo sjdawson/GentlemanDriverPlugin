@@ -2,6 +2,15 @@
 
 ---
 
+### `v1.0.3` Session Duration & TimeLeftPercent
+
+Adds a new Session subset, starting with Duration and TimeLeftPercent
+
+- [Added property Session.Duration](/features/session#duration)
+- [Added property Session.TimeLeftPercent](/features/session#time-left-as-percent)
+
+---
+
 ### `v1.0.2` LastInLap/LastOutLap
 
 Adds the following new properties
