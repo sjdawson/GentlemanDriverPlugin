@@ -35,10 +35,6 @@
       <HintPath>..\..\..\SimHub\GameReaderCommon.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="InputManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\InputManager.dll</HintPath>
-    </Reference>
     <Reference Include="InSimDotNet, Version=2.3.2.0, Culture=neutral, PublicKeyToken=1943e54a82f60fb6, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\InSimDotNet.dll</HintPath>
