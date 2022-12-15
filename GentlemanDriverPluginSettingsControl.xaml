@@ -24,8 +24,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" Text="Optimal tyre temperature" Grid.Row="0" />
-        <Custom:NumericUpDown x:Name="OptimalTyreTemperature" HasDecimals="False" Margin="5" ValueChanged="OptimalTyreTemperatureChanged" Grid.Row="0"
+        <TextBlock Text="SETTINGS" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Margin="20,20,0,0"/>
+
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" Text="Optimal tyre temperature (°C)" Grid.Row="1" />
+        <Custom:NumericUpDown x:Name="OptimalTyreTemperature" HasDecimals="False" Margin="5" ValueChanged="OptimalTyreTemperatureChanged" Grid.Row="1"
                               ToolTip="The value at which your tyres are at their optimal temperature by default"
                               Width="300" HorizontalAlignment="Right"
                               Grid.Column="1" Minimum="0" Maximum="200"/>
