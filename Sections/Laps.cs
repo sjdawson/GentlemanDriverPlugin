@@ -8,6 +8,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         private GentlemanDriverPlugin Base;
 
         private int LastOutLap = 0;
+        private DateTime LastOutLapTime = DateTime.Now;
 
         public void Init(GentlemanDriverPlugin gentlemanDriverPlugin)
         {
@@ -15,6 +16,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
             Base.AddProp("Laps.PredictedLapTime", new TimeSpan());
             Base.AddProp("Laps.StintTotal", 0);
+            Base.AddProp("Laps.StintTime", new TimeSpan());
             Base.AddProp("Laps.LastOutLap", 0);
             Base.AddProp("Laps.LastInLap", 0);
             Base.AddProp("Laps.Display", "-");
@@ -24,6 +26,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         {
             Base.SetProp("Laps.PredictedLapTime", PredictedLapTime(data));
             Base.SetProp("Laps.StintTotal", LapsStintTotal(data));
+            Base.SetProp("Laps.StintTime", LapsStintTime());
             Base.SetProp("Laps.LastOutLap", LastOutLapCalc());
             Base.SetProp("Laps.LastInLap", LastInLapCalc());
             Base.SetProp("Laps.Display", LapsDisplay(data));
@@ -41,10 +44,17 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         private int LapsStintTotal(GameData data)
         {
-            if (data.NewData.IsInPitLane > 0)
+            if (data.NewData.IsInPitLane > 0) {
                 LastOutLap = data.NewData.CurrentLap;
+                LastOutLapTime = DateTime.Now;
+            }
 
             return data.NewData.CurrentLap - LastOutLap;
+        }
+
+        private TimeSpan LapsStintTime()
+        {
+            return DateTime.Now.Subtract(LastOutLapTime);
         }
 
         private int LastOutLapCalc()
