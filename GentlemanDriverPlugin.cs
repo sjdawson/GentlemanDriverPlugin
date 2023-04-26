@@ -1,4 +1,4 @@
-﻿using GameReaderCommon;
+using GameReaderCommon;
 using SimHub.Plugins;
 using sjdawson.GentlemanDriverPlugin.Sections;
 using System;
@@ -18,6 +18,7 @@ namespace sjdawson.GentlemanDriverPlugin
         public List<IPluginSection> pluginSections = new List<IPluginSection>
         {
             new Laps(),
+            new LaunchMode(),
             new Session(),
             new TyreCompound(),
             new TyreTemps(),
