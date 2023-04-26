@@ -49,8 +49,8 @@
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\SimHub\MahApps.Metro.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -80,10 +80,11 @@
   <ItemGroup>
     <Compile Include="IPluginSection.cs" />
     <Compile Include="Sections\GameRunningDelayed.cs" />
+    <Compile Include="Sections\Laps.cs" />
+    <Compile Include="Sections\LaunchMode.cs" />
     <Compile Include="Sections\Session.cs" />
     <Compile Include="Sections\TyreCompound.cs" />
     <Compile Include="Sections\TyreTemps.cs" />
-    <Compile Include="Sections\Laps.cs" />
     <Compile Include="GentlemanDriverPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GentlemanDriverPluginSettings.cs" />
