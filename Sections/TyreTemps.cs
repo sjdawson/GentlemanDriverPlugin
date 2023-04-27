@@ -44,7 +44,11 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             Base.AddProp("Tyres.OptimalTyreTemperature", CurrentOptimalTemperature);
 
             foreach (var TyreTempToMonitor in TyreTempsToMonitor)
+            {
                 Base.AddProp("Tyres.OptimalTyreTemperatureHex" + TyreTempToMonitor, TyreTempHexGradient[0]);
+                Base.AddProp("Tyres.OptimalTyreTemperaturePercent" + TyreTempToMonitor, "0.0");
+            }
+                
 
             Base.AddAction("IncreaseOptimalTyreTemp", (a, b) => {
                 ChangeOptimalTyreTemperature(1);
@@ -60,10 +64,17 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             Base.SetProp("Tyres.OptimalTyreTemperature", GetOptimalTyreTemperature());
 
             foreach (var TyreTempToMonitor in TyreTempsToMonitor)
+            {
                 Base.SetProp(
-                    "Tyres.OptimalTyreTemperatureHex" + TyreTempToMonitor, 
+                    "Tyres.OptimalTyreTemperatureHex" + TyreTempToMonitor,
                     GetOptimalTyreTemperatureHex("TyreTemperature" + TyreTempToMonitor)
                 );
+
+                Base.SetProp(
+                    "Tyres.OptimalTyreTemperaturePercent" + TyreTempToMonitor,
+                    GetOptimalTyreTemperaturePercent("TyreTemperature" + TyreTempToMonitor)
+                );
+            }
         }
 
         public void DataUpdate(ref GameData data)
@@ -107,10 +118,16 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             var carid = (string)Base.PluginManager.GetPropertyValue("DataCorePlugin.GameData.CarId");
 
             if (Base.Settings.OptimalTyreTemps.ContainsKey(game))
+            {
                 if (Base.Settings.OptimalTyreTemps[game].ContainsKey(carid))
+                {
                     return Base.Settings.OptimalTyreTemps[game][carid];
+                }                    
                 else
+                {
                     return Base.Settings.OptimalTyreTemps[game]["Default"];
+                }
+            }               
 
             // If all else fails, use the default temperature value.
             return Base.Settings.OptimalTyreTemps["Default"]["Default"];
@@ -128,6 +145,20 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
                 return TyreTempHexGradient[currentTyreTemperature - (optimalTyreTemperature - 20)];
 
             return TyreTempHexGradient[39];
+        }
+
+        private float GetOptimalTyreTemperaturePercent(string tyreProp)
+        {
+            var optimalTyreTemperature = GetOptimalTyreTemperature();
+            var currentTyreTemperature = (int)Math.Round((double)Base.PluginManager.GetPropertyValue("DataCorePlugin.GameData." + tyreProp));
+
+            if (currentTyreTemperature < optimalTyreTemperature - 20)
+                return 0;
+
+            if (currentTyreTemperature >= optimalTyreTemperature - 20 && currentTyreTemperature < optimalTyreTemperature + 20)
+                return Base.InputAsPercentageOfRange(currentTyreTemperature, optimalTyreTemperature - 20, optimalTyreTemperature + 20);
+
+            return 1;
         }
     }
 }
