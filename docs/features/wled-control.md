@@ -46,5 +46,5 @@ grab them below:
     {"v": true, "bri": 255, "seg": [{"col": [[0,0,0]], "pal": 2, "fx": 0}]}
 ```
 
-(Check the WLED documentation)[https://kno.wled.ge/interfaces/json-api/#setting-new-values] 
+[Check the WLED documentation](https://kno.wled.ge/interfaces/json-api/#setting-new-values)
 for the values you can set in these fields, some experimentation may be required!
