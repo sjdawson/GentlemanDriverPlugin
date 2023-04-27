@@ -115,3 +115,23 @@ $prop('GentlemanDriverPlugin.Tyres.OptimalTyreTemperatureHexRearRight')
 ```
 
 ---
+
+### Optimal tyre temperature represented as a percent
+
+For each corner of the car, this will report the temperature of the wheels as a
+percentage, from 0 to 1, where 0.5 is considered the optimum temperature.
+
+```ncalc
+[GentlemanDriverPlugin.Tyres.OptimalTyreTemperaturePercentFrontLeft]
+[GentlemanDriverPlugin.Tyres.OptimalTyreTemperaturePercentFrontRight]
+[GentlemanDriverPlugin.Tyres.OptimalTyreTemperaturePercentRearLeft]
+[GentlemanDriverPlugin.Tyres.OptimalTyreTemperaturePercentRearRight]
+```
+```js
+$prop('GentlemanDriverPlugin.Tyres.OptimalTyreTemperaturePercentFrontLeft')
+$prop('GentlemanDriverPlugin.Tyres.OptimalTyreTemperaturePercentFrontRight')
+$prop('GentlemanDriverPlugin.Tyres.OptimalTyreTemperaturePercentRearLeft')
+$prop('GentlemanDriverPlugin.Tyres.OptimalTyreTemperaturePercentRearRight')
+```
+
+---

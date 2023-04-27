@@ -1,7 +1,7 @@
 Unicode True
 
 !define PRODUCT_NAME "sjdawson.GentlemanDriverPlugin"
-!define PRODUCT_VERSION "v1.0.3"
+!define PRODUCT_VERSION "v1.1.0"
 !define PRODUCT_PUBLISHER "sjdawson"
 !define PRODUCT_WEB_SITE "https://sjdawson.github.io/GentlemanDriverPlugin"
 

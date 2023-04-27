@@ -2,6 +2,19 @@
 
 ---
 
+### `v1.1.0` Multiple new properties and Experimental WLED control
+
+Adds multiple new properties in different sections, and adds experimental WLED control
+
+- [Added property Laps.Display](/features/laps#display)
+- [Added property Laps.StintTime](/features/laps#stint-time)
+- [Added action LaunchModeToggle](/features/launch-mode#launch-mode-toggle)
+- [Added property LaunchMode.Active](/features/launch-mode#active)
+- [Added property Tyres.OptimalTyreTemperaturePercent{Wheel}](/features/tyre-temperature#optimal-tyre-temperature-represented-as-a-percent)
+- [Added experimental WLED control](/features/wled-control)
+
+---
+
 ### `v1.0.3` Session Duration & TimeLeftPercent
 
 Adds a new Session subset, starting with Duration and TimeLeftPercent

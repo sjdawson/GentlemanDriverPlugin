@@ -30,7 +30,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
             apiUrlBase = string.Format(apiUrlBase, Base.Settings.WledIp);
 
-            wledControlEnabled = Regex.IsMatch(Base.Settings.WledIp, @"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}");
+            wledControlEnabled = Base.Settings.WledControlEnabled && Regex.IsMatch(Base.Settings.WledIp, @"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}");
 
             if (wledControlEnabled)
             {
