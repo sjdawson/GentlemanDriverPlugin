@@ -1,4 +1,4 @@
-using GameReaderCommon;
+﻿using GameReaderCommon;
 using SimHub.Plugins;
 using sjdawson.GentlemanDriverPlugin.Sections;
 using System;
@@ -22,7 +22,8 @@ namespace sjdawson.GentlemanDriverPlugin
             new Session(),
             new TyreCompound(),
             new TyreTemps(),
-            new GameRunningDelayed()
+            new GameRunningDelayed(),
+            new WLedControl(),
         };
 
         /// <summary>
@@ -72,6 +73,7 @@ namespace sjdawson.GentlemanDriverPlugin
         public void AddProp(string PropertyName, dynamic defaultValue) => PluginManager.AddProperty(PropertyName, GetType(), defaultValue);
         public void SetProp(string PropertyName, dynamic value) => PluginManager.SetPropertyValue(PropertyName, GetType(), value);
         public dynamic GetProp(string PropertyName) => PluginManager.GetPropertyValue("DataCorePlugin.GameRawData."+PropertyName);
+        public dynamic GetNormalisedProp(string PropertyName) => PluginManager.GetPropertyValue("DataCorePlugin.GameData." + PropertyName);
 
         public void AddEvent(string EventName) => PluginManager.AddEvent(EventName, GetType());
         public void TriggerEvent(string EventName) => PluginManager.TriggerEvent(EventName, GetType());

@@ -3,33 +3,108 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:sjdawson.GentlemanDriverPlugin"
              xmlns:styles="clr-namespace:SimHub.Plugins.Styles;assembly=SimHub.Plugins"
-             xmlns:ui="clr-namespace:SimHub.Plugins.UI;assembly=SimHub.Plugins"
-             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="46"/>
-            <RowDefinition Height="36"/>
-            <RowDefinition Height="46"/>
-            <RowDefinition Height="36"/>
-            <RowDefinition Height="36"/>
-            <RowDefinition Height="36"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+             d:DesignHeight="850" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    
+    <styles:SHTabControl x:Name="GentlemanDriverPluginSettingsTabs">
+        <styles:SHTabItem Header="General">
+            <ScrollViewer>
+                <StackPanel>
+                    <styles:SHSection Title="Optimal tyre temperature defaults (°C)">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="36*" />
+                                <RowDefinition Height="36*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-        <TextBlock Text="SETTINGS" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2" Margin="20,20,0,0"/>
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Non-game specific" Grid.Row="0" />
+                            <mah:NumericUpDown x:Name="OptimalTyreTemperature" HasDecimals="False" Margin="5" ValueChanged="OptimalTyreTemperatureChanged" Grid.Row="0"
+                                ToolTip="The value at which your tyres are at their optimal temperature by default"
+                                Width="300" HorizontalAlignment="Left"
+                                Grid.Column="1" Minimum="0" Maximum="200"/>
 
-        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" Text="Optimal tyre temperature (°C)" Grid.Row="1" />
-        <Custom:NumericUpDown x:Name="OptimalTyreTemperature" HasDecimals="False" Margin="5" ValueChanged="OptimalTyreTemperatureChanged" Grid.Row="1"
-                              ToolTip="The value at which your tyres are at their optimal temperature by default"
-                              Width="300" HorizontalAlignment="Right"
-                              Grid.Column="1" Minimum="0" Maximum="200"/>
-    </Grid>
+                            <TextBlock x:Name="OptimalTyreTemperatureCurrentGameLabel" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Current game: {Game}" Grid.Row="1" />
+                            <mah:NumericUpDown x:Name="OptimalTyreTemperatureCurrentGame" HasDecimals="False" Margin="5" ValueChanged="OptimalTyreTemperatureChangedCurrentGame" Grid.Row="1"
+                                ToolTip="The value at which your tyres are at their optimal temperature by default"
+                                Width="300" HorizontalAlignment="Left"
+                                Grid.Column="1" Minimum="0" Maximum="200"/>
+                        </Grid>
+                    </styles:SHSection>
+                </StackPanel>
+            </ScrollViewer>
+        </styles:SHTabItem>
+        <styles:SHTabItem Header="WLED">
+            <ScrollViewer>
+                <StackPanel>
+                    <Border CornerRadius="1" BorderBrush="#FFFF8000" BorderThickness="5" Margin="5">
+                        <TextBlock Background="#FFFF8000" Foreground="{DynamicResource ControlBackgroundBrush}" Padding="20, 2" TextAlignment="Center" FontWeight="Bold" FontSize="14">
+                            Note: This functionality is currently experimental. Report any bugs via a <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" Foreground="{DynamicResource ControlBackgroundBrush}" NavigateUri="https://github.com/sjdawson/GentlemanDriverPlugin/issues/new?assignees=sjdawson&amp;labels=Bug&amp;template=bug.md&amp;title=BUG%3A+">GitHub issue</Hyperlink>. Thanks.
+                        </TextBlock>
+                    </Border>
+                    <styles:SHSection Title="Settings" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="36" />
+                                <RowDefinition Height="36" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Enabled" Grid.Row="0" />
+                            <CheckBox x:Name="WledControlEnabled" Click="WledControlEnabled_Click" Grid.Row="0" Grid.Column="1" Margin="5" />
+
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="IP Address" Grid.Row="1" />
+                            <TextBox x:Name="WledIp" TextChanged="WledIpChanged" Grid.Row="1" Grid.Column="1" Margin="5" mah:TextBoxHelper.Watermark="Ex. 192.168.0.5"  FontFamily="Consolas" />
+                        </Grid>
+                    </styles:SHSection>
+                    <styles:SHSection Title="JSON">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition MinHeight="36"/>
+                                <RowDefinition Height="36"/>
+                                <RowDefinition Height="36"/>
+                                <RowDefinition Height="36"/>
+                                <RowDefinition Height="36"/>
+                                <RowDefinition Height="36"/>
+                                <RowDefinition Height="36"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10" TextWrapping="WrapWithOverflow">
+                                The following settings are JSON strings that are sent to the WLED instance on each of the events listed.
+                                The plugin supplies some defaults for these, but you may customise them to your own liking. See the 
+                                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://kno.wled.ge/interfaces/json-api/#setting-new-values" Foreground="{DynamicResource AccentBaseColorBrush}" FontWeight="Bold">WLED documentation</Hyperlink>
+                                for details on what can be passed. If you need to restore to their original values, you can grab them from the 
+                                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://sjdawson.github.io/GentlemanDriverPlugin/#/" Foreground="{DynamicResource AccentBaseColorBrush}" FontWeight="Bold">documentation for the GentlemanDriverPlugin</Hyperlink>.
+                            </TextBlock>
+
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Black Flag" Grid.Row="1" />
+                            <TextBox x:Name="BlackFlagJson" TextChanged="FlagJsonChanged" Grid.Row="1" Grid.Column="1" Margin="5" FontFamily="Consolas" />
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Blue Flag" Grid.Row="2" />
+                            <TextBox x:Name="BlueFlagJson" Grid.Row="2" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Green Flag" Grid.Row="3" />
+                            <TextBox x:Name="GreenFlagJson" Grid.Row="3" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="White Flag" Grid.Row="4" />
+                            <TextBox x:Name="WhiteFlagJson" Grid.Row="4" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Yellow Flag" Grid.Row="5" />
+                            <TextBox x:Name="YellowFlagJson" Grid.Row="5" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="No Flag" Grid.Row="6" />
+                            <TextBox x:Name="NoFlagJson" Grid.Row="6" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
+                        </Grid>
+                    </styles:SHSection>
+                </StackPanel>
+            </ScrollViewer>
+        </styles:SHTabItem>
+    </styles:SHTabControl>
 </UserControl>
