@@ -91,7 +91,7 @@
     <Compile Include="GentlemanDriverPluginSettingsControl.xaml.cs">
       <DependentUpon>GentlemanDriverPluginSettingsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sections\WLedControl.cs" />
+    <Compile Include="Sections\WledControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">

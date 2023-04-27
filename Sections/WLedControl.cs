@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
-    public class WLedControl: IPluginSection
+    public class WledControl: IPluginSection
     {
         private GentlemanDriverPlugin Base;
 
@@ -40,6 +40,8 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
             Base.AddProp("WLED.ControlEnabled", wledControlEnabled);
             Base.AddProp("WLED.ApiUrl", apiUrlBase);
+
+            Base.AddEvent("WLED.Test");
         }
 
         public void GameRunningDataUpdate(ref GameData data)
@@ -74,6 +76,11 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         public void End()
         {
         }
+
+        public void TestJson(string testState)
+        {
+            UpdateLight(testState);
+        }
             
         /**
          * Get the current state of the WLED device.
@@ -93,7 +100,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             return result;
         }
 
-        private void UpdateLight(string data)
+        public void UpdateLight(string data)
         {
             var httpRequest = (HttpWebRequest)WebRequest.Create(apiUrlBase);
             httpRequest.Method = "POST";

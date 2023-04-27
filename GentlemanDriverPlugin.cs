@@ -23,7 +23,7 @@ namespace sjdawson.GentlemanDriverPlugin
             new TyreCompound(),
             new TyreTemps(),
             new GameRunningDelayed(),
-            new WLedControl(),
+            new WledControl(),
         };
 
         /// <summary>
