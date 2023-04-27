@@ -44,7 +44,7 @@ SetCompressor lzma
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "bin/Release/sjdawson.GentlemanDriverPluginInstall.exe"
+OutFile "bin/Release/sjdawson.GentlemanDriverPluginInstall-${PRODUCT_VERSION}.exe"
 ShowInstDetails show
 
 Section "MainSection" SEC01
