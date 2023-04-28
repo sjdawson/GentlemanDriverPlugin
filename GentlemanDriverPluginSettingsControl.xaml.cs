@@ -59,8 +59,12 @@ namespace sjdawson.GentlemanDriverPlugin
         private void WledIpChanged(object sender, TextChangedEventArgs e)
         {
             Plugin.Settings.WledIp = (string)WledIp.Text;
-            Plugin.Settings.WledControlEnabled = false;
-            WledControlEnabled.IsChecked = false;
+
+            if (!Plugin.Settings.WledIp.Equals((string) WledIp.Text))
+            {
+                Plugin.Settings.WledControlEnabled = false;
+                WledControlEnabled.IsChecked = false;
+            }         
 
             UpdateStatusMessage(
                 "Enable to check status…",
