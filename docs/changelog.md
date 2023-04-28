@@ -2,6 +2,17 @@
 
 ---
 
+### `v1.1.1` WLED control tweaks
+
+Some smaller QOL features and tweaks to the WLED Control aspects
+
+- Added "TEST" buttons to the JSON fields, to test effects without having to launch a game
+- Tweaked default JSON values
+- Added checkered and orange flags
+- On enabling, the plugin will attempt a connection to the WLED instance and give some feedback on status
+
+---
+
 ### `v1.1.0` Multiple new properties and Experimental WLED control
 
 Adds multiple new properties in different sections, and adds experimental WLED control
