@@ -40,8 +40,6 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
             Base.AddProp("WLED.ControlEnabled", wledControlEnabled);
             Base.AddProp("WLED.ApiUrl", apiUrlBase);
-
-            Base.AddEvent("WLED.Test");
         }
 
         public void GameRunningDataUpdate(ref GameData data)
@@ -58,10 +56,12 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             }
 
             ReactToBoolProp("Flag_Black", Base.Settings.FlagsJson["BlackFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
-            ReactToBoolProp("Flag_Yellow", Base.Settings.FlagsJson["YellowFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
-            ReactToBoolProp("Flag_White", Base.Settings.FlagsJson["WhiteFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
             ReactToBoolProp("Flag_Blue", Base.Settings.FlagsJson["BlueFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
+            ReactToBoolProp("Flag_Checkered", Base.Settings.FlagsJson["CheckeredFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
             ReactToBoolProp("Flag_Green", Base.Settings.FlagsJson["GreenFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
+            ReactToBoolProp("Flag_Orange", Base.Settings.FlagsJson["OrangeFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
+            ReactToBoolProp("Flag_White", Base.Settings.FlagsJson["WhiteFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
+            ReactToBoolProp("Flag_Yellow", Base.Settings.FlagsJson["YellowFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
         }
 
         public void DataUpdate(ref GameData data)
@@ -100,7 +100,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             return result;
         }
 
-        public void UpdateLight(string data)
+        private void UpdateLight(string data)
         {
             var httpRequest = (HttpWebRequest)WebRequest.Create(apiUrlBase);
             httpRequest.Method = "POST";

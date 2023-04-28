@@ -57,18 +57,20 @@
                                 <ColumnDefinition Width="300"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="IP Address" Grid.Row="0" />
+                            <TextBox x:Name="WledIp" TextChanged="WledIpChanged" Grid.Row="0" Grid.Column="1" Margin="5" mah:TextBoxHelper.Watermark="Ex. 192.168.0.5"  FontFamily="Consolas" />
 
-                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Enabled" Grid.Row="0" />
-                            <CheckBox x:Name="WledControlEnabled" Click="WledControlEnabled_Click" Grid.Row="0" Grid.Column="1" Margin="5" />
-
-                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="IP Address" Grid.Row="1" />
-                            <TextBox x:Name="WledIp" TextChanged="WledIpChanged" Grid.Row="1" Grid.Column="1" Margin="5" mah:TextBoxHelper.Watermark="Ex. 192.168.0.5"  FontFamily="Consolas" />
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Enable" Grid.Row="1" />
+                            <CheckBox x:Name="WledControlEnabled" Click="WledControlEnabled_Click" Grid.Row="1" Grid.Column="1" Margin="5" />
+                            <TextBlock x:Name="WledStatusMessage" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,10,0" Text="Enable to check status…" Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource GrayBrush5}" />
                         </Grid>
                     </styles:SHSection>
                     <styles:SHSection Title="JSON">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition MinHeight="36"/>
+                                <RowDefinition Height="36"/>
+                                <RowDefinition Height="36"/>
                                 <RowDefinition Height="36"/>
                                 <RowDefinition Height="36"/>
                                 <RowDefinition Height="36"/>
@@ -90,17 +92,92 @@
                             </TextBlock>
 
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Black Flag" Grid.Row="1" />
-                            <TextBox x:Name="BlackFlagJson" TextChanged="FlagJsonChanged" Grid.Row="1" Grid.Column="1" Margin="5" FontFamily="Consolas" />
+                            <Grid Grid.Row="1" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox x:Name="BlackFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
+                                <Button x:Name="BlackFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
+                            </Grid>
+
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Blue Flag" Grid.Row="2" />
-                            <TextBox x:Name="BlueFlagJson" Grid.Row="2" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
-                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Green Flag" Grid.Row="3" />
-                            <TextBox x:Name="GreenFlagJson" Grid.Row="3" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
-                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="White Flag" Grid.Row="4" />
-                            <TextBox x:Name="WhiteFlagJson" Grid.Row="4" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
-                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Yellow Flag" Grid.Row="5" />
-                            <TextBox x:Name="YellowFlagJson" Grid.Row="5" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
-                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="No Flag" Grid.Row="6" />
-                            <TextBox x:Name="NoFlagJson" Grid.Row="6" Grid.Column="1" Margin="5" TextChanged="FlagJsonChanged" FontFamily="Consolas" />
+                            <Grid Grid.Row="2" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox x:Name="BlueFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
+                                <Button x:Name="BlueFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
+                            </Grid>
+                            
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Checkered Flag" Grid.Row="3" />
+                            <Grid Grid.Row="3" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox x:Name="CheckeredFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
+                                <Button x:Name="CheckeredFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
+                            </Grid>
+
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Green Flag" Grid.Row="4" />
+                            <Grid Grid.Row="4" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox x:Name="GreenFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
+                                <Button x:Name="GreenFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
+                            </Grid>
+
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Orange Flag" Grid.Row="5" />
+                            <Grid Grid.Row="5" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox x:Name="OrangeFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
+                                <Button x:Name="OrangeFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
+                            </Grid>
+
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="White Flag" Grid.Row="6" />
+                            <Grid Grid.Row="6" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox x:Name="WhiteFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
+                                <Button x:Name="WhiteFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
+                            </Grid>
+
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Yellow Flag" Grid.Row="7" />
+                            <Grid Grid.Row="7" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox x:Name="YellowFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
+                                <Button x:Name="YellowFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
+                            </Grid>
+
+                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="No Flag" Grid.Row="8" />
+                            <Grid Grid.Row="8" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox x:Name="NoFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
+                                <Button x:Name="NoFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
+                            </Grid>
                         </Grid>
                     </styles:SHSection>
                 </StackPanel>
