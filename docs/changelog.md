@@ -2,6 +2,20 @@
 
 ---
 
+### `v1.2.0` WLED switch to WARLS
+
+In this release, the WLED integration has been converted to use WLED's live mode by
+sending UDP to your WLED instance, instead of pinging the HTTP API with a JSON payload.
+
+This move allows for better real-time control of WLED, and is a precursor to (_hopefully_)
+be able to have WLED respond as something more complex, like RPM or shift lights.
+
+- Removed "JSON" payloads and no longer sends those to WLED
+- Added "Colour" settings to allow tweaking of what colour WLED will display
+- Fixed ACC not generating a full `Flag_Yellow` event to send to WLED
+
+---
+
 ### `v1.1.1` WLED control tweaks
 
 Some smaller QOL features and tweaks to the WLED Control aspects
