@@ -14,6 +14,9 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         private bool wledControlEnabled = false;
 
         private static UdpClient udpClient;
+
+        private static TimeSpan msBetweenUdpPackets = TimeSpan.FromMilliseconds(100);
+        private static long timeLastUdpPacketSent = DateTimeOffset.Now.ToUnixTimeMilliseconds();
         
         /// <summary>
         /// Store the states of the properties first change to on/off, so we don't send constant WLED messages
@@ -25,6 +28,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
             Base = gentlemanDriverPlugin;
 
             wledControlEnabled = Base.Settings.WledControlEnabled && Regex.IsMatch(Base.Settings.WledIp, @"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}");
+            msBetweenUdpPackets = TimeSpan.FromMilliseconds(1000 / Base.Settings.WledFps);
 
             udpClient = new UdpClient();
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(Base.Settings.WledIp), 21324);
@@ -66,6 +70,12 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public static void sendWarlsPacket(int ledCount, int r, int g, int b)
         {
+            if (DateTimeOffset.Now.ToUnixTimeMilliseconds() <= (timeLastUdpPacketSent + msBetweenUdpPackets.TotalMilliseconds))
+            {
+                return;
+            }
+            timeLastUdpPacketSent = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
             var packetLength = 2 + (ledCount * 4); // 2 initial config bytes followed by $ledCount quads for the LEDs
             var pkt = new byte[packetLength];
             pkt[0] = 1; // Use WARLS mode
