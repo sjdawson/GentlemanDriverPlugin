@@ -1,10 +1,9 @@
 ﻿using GameReaderCommon;
 using System;
-using System.IO;
 using System.Net;
-using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Net.Sockets;
 
 namespace sjdawson.GentlemanDriverPlugin.Sections
 {
@@ -14,10 +13,7 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         private bool wledControlEnabled = false;
 
-        private String apiUrlBase = "http://{0}/json";
-        
-        private JObject wledCurrentState;
-        private bool wledCurrentStateOn = true;
+        private static UdpClient udpClient;
         
         /// <summary>
         /// Store the states of the properties first change to on/off, so we don't send constant WLED messages
@@ -28,120 +24,103 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
         {
             Base = gentlemanDriverPlugin;
 
-            apiUrlBase = string.Format(apiUrlBase, Base.Settings.WledIp);
-
             wledControlEnabled = Base.Settings.WledControlEnabled && Regex.IsMatch(Base.Settings.WledIp, @"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}");
 
+            udpClient = new UdpClient();
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(Base.Settings.WledIp), 21324);
+            udpClient.Connect(ep);
+            
+            // Send an initial hello in SimHub blue
             if (wledControlEnabled)
             {
-                // Store the current state of the lighting so that it can be returned to later
-                wledCurrentState = JObject.Parse(GetWledCurrentState());
+                sendWarlsPacket(Base.Settings.WledLedCount, 0, 114, 187);
             }
-
-            Base.AddProp("WLED.ControlEnabled", wledControlEnabled);
-            Base.AddProp("WLED.ApiUrl", apiUrlBase);
         }
 
         public void GameRunningDataUpdate(ref GameData data)
         {
+            // Don't do anything if WLED control is not enabled
             if (!wledControlEnabled)
             {
                 return;
             }
 
-            if (wledCurrentStateOn == true)
-            {
-                wledCurrentStateOn = false;
-                UpdateLight(Base.Settings.FlagsJson["NoFlagJson"]);
-            }
-
-            ReactToBoolProp("Flag_Black", Base.Settings.FlagsJson["BlackFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
-            ReactToBoolProp("Flag_Blue", Base.Settings.FlagsJson["BlueFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
-            ReactToBoolProp("Flag_Checkered", Base.Settings.FlagsJson["CheckeredFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
-            ReactToBoolProp("Flag_Green", Base.Settings.FlagsJson["GreenFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
-            ReactToBoolProp("Flag_Orange", Base.Settings.FlagsJson["OrangeFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
-            ReactToBoolProp("Flag_White", Base.Settings.FlagsJson["WhiteFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
-            ReactToBoolProp("Flag_Yellow", Base.Settings.FlagsJson["YellowFlagJson"], Base.Settings.FlagsJson["NoFlagJson"]);
+            if (checkFlag("Green", data.GameName)) { forwardHexToWarlsPacket(Base.Settings.FlagsRgb["GreenFlagRgb"]); }
+            else if (checkFlag("Red", data.GameName)) { forwardHexToWarlsPacket(Base.Settings.FlagsRgb["RedFlagRgb"]); }
+            else if (checkFlag("Yellow", data.GameName)) { forwardHexToWarlsPacket(Base.Settings.FlagsRgb["YellowFlagRgb"]); }
+            else if (checkFlag("Blue", data.GameName)) { forwardHexToWarlsPacket(Base.Settings.FlagsRgb["BlueFlagRgb"]); }
+            else if (checkFlag("Orange", data.GameName)) { forwardHexToWarlsPacket(Base.Settings.FlagsRgb["OrangeFlagRgb"]); }
+            else if (checkFlag("Checkered", data.GameName)) { forwardHexToWarlsPacket(Base.Settings.FlagsRgb["CheckeredFlagRgb"], 1000); }
+            else if (checkFlag("White", data.GameName)) { forwardHexToWarlsPacket(Base.Settings.FlagsRgb["WhiteFlagRgb"]); }
+            else if (checkFlag("Black", data.GameName)) { forwardHexToWarlsPacket(Base.Settings.FlagsRgb["BlackFlagRgb"], 500); }
+            else { forwardHexToWarlsPacket(Base.Settings.FlagsRgb["NoFlagRgb"]); }
         }
 
         public void DataUpdate(ref GameData data)
         {
-            if (wledControlEnabled && !data.GameRunning && !wledCurrentStateOn)
-            {
-                UpdateLight(wledCurrentState["state"].ToString());
-                wledCurrentStateOn = true;
-            }
         }
 
         public void End()
         {
         }
 
-        public void TestJson(string testState)
+        public static void sendWarlsPacket(int ledCount, int r, int g, int b)
         {
-            UpdateLight(testState);
-        }
-            
-        /**
-         * Get the current state of the WLED device.
-         */
-        private string GetWledCurrentState()
-        {
-            var httpRequest = (HttpWebRequest)WebRequest.Create(apiUrlBase);
-            httpRequest.Method = "GET";
-            httpRequest.ContentType = "application/json";
-            var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-            var result = "";
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            var packetLength = 2 + (ledCount * 4); // 2 initial config bytes followed by $ledCount quads for the LEDs
+            var pkt = new byte[packetLength];
+            pkt[0] = 1; // Use WARLS mode
+            pkt[1] = 3; // Keep UDP active this long in seconds after last packet received
+
+            var i = 0;
+            var ledIndex = 0;
+            while (i < (ledCount * 4))
             {
-                result = streamReader.ReadToEnd();
+                pkt[i + 2] = (byte)ledIndex;
+                pkt[i + 3] = (byte)r;
+                pkt[i + 4] = (byte)g;
+                pkt[i + 5] = (byte)b;
+
+                i = i + 4;
+                ledIndex++;
             }
 
-            return result;
+            udpClient.Send(pkt, pkt.Length);
         }
 
-        private void UpdateLight(string data)
+        public static void blinkWarlsPacket(int ledCount, int r, int g, int b, int blinkDelay)
         {
-            var httpRequest = (HttpWebRequest)WebRequest.Create(apiUrlBase);
-            httpRequest.Method = "POST";
-
-            httpRequest.Accept = "application/json";
-            httpRequest.ContentType = "application/json";
-
-            using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+            if (DateTime.Now.TimeOfDay.TotalMilliseconds % blinkDelay * 2 > blinkDelay)
             {
-                streamWriter.Write(data);
+                sendWarlsPacket(ledCount, r, g, b);
             }
-
-            var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            else
             {
-                var result = streamReader.ReadToEnd();
+                sendWarlsPacket(ledCount, 0, 0, 0);
             }
         }
-        
-        /// <summary>
-        /// Have the WLED instance react to a boolean property switching between on and off.
-        /// </summary>
-        /// <param name="prop">The property that is being looked out for</param>
-        /// <param name="onState">What JSON string should be sent to WLED for this property switching on</param>
-        /// <param name="offState">What JSON string should be sent to WLED for this property switching off</param>
-        private void ReactToBoolProp(string prop, string onState, string offState)
+
+        public void forwardHexToWarlsPacket(string hex, int blinkDelay = 0)
         {
-            // If the property state isn't in the dict, put it there with a false default
-            if (!PropStates.ContainsKey(prop)) { PropStates.Add(prop, false); };
+            var colour = System.Drawing.ColorTranslator.FromHtml(hex);
+            if (blinkDelay > 0) { blinkWarlsPacket(Base.Settings.WledLedCount, colour.R, colour.G, colour.B, blinkDelay); } 
+            else { sendWarlsPacket(Base.Settings.WledLedCount, colour.R, colour.G, colour.B); }
+        }
 
-            if (Base.GetNormalisedProp(prop) == 1 && !PropStates[prop])
+        private bool checkFlag(string colour, string game)
+        {   
+            // ACC has some pretty funky flag handling.
+            if (game == "AssettoCorsaCompetizione" && colour != "Red")
             {
-                PropStates[prop] = !PropStates[prop];
-                UpdateLight(onState);
+                if (colour == "Yellow" || colour == "White")
+                {
+                    return Base.GetProp(String.Format("Graphics.global{0}", colour)) == 1
+                        || Base.GetProp(String.Format("Graphics.FlagsDetails.IsACC_{0}_FLAG", colour.ToUpper()));
+                }
+
+                return Base.GetProp(String.Format("Graphics.FlagsDetails.IsACC_{0}_FLAG", colour.ToUpper()));
             }
 
-            if (Base.GetNormalisedProp(prop) == 0 && PropStates[prop])
-            {
-                PropStates[prop] = !PropStates[prop];
-                UpdateLight(offState);
-            }
+            return Base.GetNormalisedProp(String.Format("Flag_{0}", colour)) == 1;
         }
     }
 }

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:styles="clr-namespace:SimHub.Plugins.Styles;assembly=SimHub.Plugins"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="850" d:DesignWidth="800" Loaded="UserControl_Loaded">
     
@@ -62,10 +63,14 @@
 
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Enable" Grid.Row="1" />
                             <CheckBox x:Name="WledControlEnabled" Click="WledControlEnabled_Click" Grid.Row="1" Grid.Column="1" Margin="5" />
+                            <TextBlock x:Name="WledControlPanelLinkContainer" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="40, 5" Visibility="Hidden">
+                                <Hyperlink x:Name="WledControlPanelLink" Foreground="{DynamicResource AccentBaseColorBrush}" FontWeight="Bold" RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://www.nothing.com">Open WLED</Hyperlink>
+                            </TextBlock>
+
                             <TextBlock x:Name="WledStatusMessage" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,10,0" Text="Enable to check status…" Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource GrayBrush5}" />
                         </Grid>
                     </styles:SHSection>
-                    <styles:SHSection Title="JSON">
+                    <styles:SHSection Title="Colours">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition MinHeight="36"/>
@@ -84,102 +89,35 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10" TextWrapping="WrapWithOverflow">
-                                The following settings are JSON strings that are sent to the WLED instance on each of the events listed.
-                                The plugin supplies some defaults for these, but you may customise them to your own liking. See the 
-                                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://kno.wled.ge/interfaces/json-api/#setting-new-values" Foreground="{DynamicResource AccentBaseColorBrush}" FontWeight="Bold">WLED documentation</Hyperlink>
-                                for details on what can be passed. If you need to restore to their original values, you can grab them from the 
-                                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://sjdawson.github.io/GentlemanDriverPlugin/#/" Foreground="{DynamicResource AccentBaseColorBrush}" FontWeight="Bold">documentation for the GentlemanDriverPlugin</Hyperlink>.
+                                To account for the variances in different LED strips, you can configure the colour of each flag that is sent to WLED.
                             </TextBlock>
 
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Black Flag" Grid.Row="1" />
-                            <Grid Grid.Row="1" Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="50" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox x:Name="BlackFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
-                                <Button x:Name="BlackFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
-                            </Grid>
+                            <xctk:ColorPicker x:Name="BlackFlagRgb" SelectedColorChanged="FlagRgb_SelectedColorChanged" Grid.Row="1" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Left" UsingAlphaChannel="False"/>
 
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Blue Flag" Grid.Row="2" />
-                            <Grid Grid.Row="2" Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="50" />
-                                </Grid.ColumnDefinitions>
+                            <xctk:ColorPicker x:Name="BlueFlagRgb" SelectedColorChanged="FlagRgb_SelectedColorChanged" Grid.Row="2" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Left" UsingAlphaChannel="False"/>
 
-                                <TextBox x:Name="BlueFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
-                                <Button x:Name="BlueFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
-                            </Grid>
-                            
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Checkered Flag" Grid.Row="3" />
-                            <Grid Grid.Row="3" Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="50" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox x:Name="CheckeredFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
-                                <Button x:Name="CheckeredFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
-                            </Grid>
+                            <xctk:ColorPicker x:Name="CheckeredFlagRgb" SelectedColorChanged="FlagRgb_SelectedColorChanged" Grid.Row="3" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Left" UsingAlphaChannel="False"/>
 
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Green Flag" Grid.Row="4" />
-                            <Grid Grid.Row="4" Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="50" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox x:Name="GreenFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
-                                <Button x:Name="GreenFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
-                            </Grid>
+                            <xctk:ColorPicker x:Name="GreenFlagRgb" SelectedColorChanged="FlagRgb_SelectedColorChanged" Grid.Row="4" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Left" UsingAlphaChannel="False"/>
 
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Orange Flag" Grid.Row="5" />
-                            <Grid Grid.Row="5" Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="50" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox x:Name="OrangeFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
-                                <Button x:Name="OrangeFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
-                            </Grid>
+                            <xctk:ColorPicker x:Name="OrangeFlagRgb" SelectedColorChanged="FlagRgb_SelectedColorChanged" Grid.Row="5" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Left" UsingAlphaChannel="False"/>
 
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="White Flag" Grid.Row="6" />
-                            <Grid Grid.Row="6" Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="50" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox x:Name="WhiteFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
-                                <Button x:Name="WhiteFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
-                            </Grid>
+                            <xctk:ColorPicker x:Name="WhiteFlagRgb" SelectedColorChanged="FlagRgb_SelectedColorChanged" Grid.Row="6" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Left" UsingAlphaChannel="False"/>
 
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="Yellow Flag" Grid.Row="7" />
-                            <Grid Grid.Row="7" Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="50" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox x:Name="YellowFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
-                                <Button x:Name="YellowFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
-                            </Grid>
+                            <xctk:ColorPicker x:Name="YellowFlagRgb" SelectedColorChanged="FlagRgb_SelectedColorChanged" Grid.Row="7" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Left" UsingAlphaChannel="False"/>
 
                             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Text="No Flag" Grid.Row="8" />
-                            <Grid Grid.Row="8" Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="50" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox x:Name="NoFlagJson" TextChanged="FlagJsonChanged" Grid.Column="0" Margin="5" FontFamily="Consolas" />
-                                <Button x:Name="NoFlagJsonTest" Click="FlagJsonTestClick" Grid.Column="1" Margin="5" Content="Test" />
-                            </Grid>
+                            <xctk:ColorPicker x:Name="NoFlagRgb" SelectedColorChanged="FlagRgb_SelectedColorChanged" Grid.Row="8" Grid.Column="1" Margin="5" Width="100" HorizontalAlignment="Left" UsingAlphaChannel="False"/>
+                            <TextBlock HorizontalAlignment="Left" Foreground="{DynamicResource GrayBrush5}" VerticalAlignment="Center" Margin="120,0,0,0" Text="When no flags are active, this colour will be sent to WLED, if you want to maintain an ambient light." Grid.Row="8" Grid.Column="1" />
                         </Grid>
-                    </styles:SHSection>
+                    </styles:SHSection> 
                 </StackPanel>
             </ScrollViewer>
         </styles:SHTabItem>

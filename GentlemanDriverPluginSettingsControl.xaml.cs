@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using sjdawson.GentlemanDriverPlugin.Sections;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Xceed.Wpf.Toolkit;
 
 namespace sjdawson.GentlemanDriverPlugin
 {
@@ -58,12 +60,14 @@ namespace sjdawson.GentlemanDriverPlugin
 
         private void WledIpChanged(object sender, TextChangedEventArgs e)
         {
-            Plugin.Settings.WledIp = (string)WledIp.Text;
-
             if (!Plugin.Settings.WledIp.Equals((string) WledIp.Text))
             {
                 Plugin.Settings.WledControlEnabled = false;
                 WledControlEnabled.IsChecked = false;
+                WledControlPanelLinkContainer.Visibility = Visibility.Hidden;
+                
+                // Only update the settings value if it's actually changed
+                Plugin.Settings.WledIp = (string)WledIp.Text;
             }         
 
             UpdateStatusMessage(
@@ -71,18 +75,6 @@ namespace sjdawson.GentlemanDriverPlugin
                 FontWeights.Normal,
                 "GrayBrush5"
             );
-        }
-
-        private void FlagJsonChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox FlagJson = (TextBox) sender;
-            Plugin.Settings.FlagsJson[FlagJson.Name] = FlagJson.Text;
-        }
-
-        private void FlagJsonTestClick(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button) sender;
-            UpdateLight(Plugin.Settings.FlagsJson[button.Name.Remove(button.Name.IndexOf("Test"))]);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -98,14 +90,14 @@ namespace sjdawson.GentlemanDriverPlugin
             WledControlEnabled.IsChecked = Plugin.Settings.WledControlEnabled;
             WledIp.Text = Plugin.Settings.WledIp;
 
-            BlackFlagJson.Text = Plugin.Settings.FlagsJson["BlackFlagJson"];
-            BlueFlagJson.Text = Plugin.Settings.FlagsJson["BlueFlagJson"];
-            CheckeredFlagJson.Text = Plugin.Settings.FlagsJson["CheckeredFlagJson"];
-            GreenFlagJson.Text = Plugin.Settings.FlagsJson["GreenFlagJson"];
-            OrangeFlagJson.Text = Plugin.Settings.FlagsJson["OrangeFlagJson"];
-            WhiteFlagJson.Text = Plugin.Settings.FlagsJson["WhiteFlagJson"];
-            YellowFlagJson.Text = Plugin.Settings.FlagsJson["YellowFlagJson"];
-            NoFlagJson.Text = Plugin.Settings.FlagsJson["NoFlagJson"];
+            BlackFlagRgb.SelectedColor = (Color)ColorConverter.ConvertFromString(Plugin.Settings.FlagsRgb["BlackFlagRgb"]);
+            BlueFlagRgb.SelectedColor = (Color)ColorConverter.ConvertFromString(Plugin.Settings.FlagsRgb["BlueFlagRgb"]);
+            CheckeredFlagRgb.SelectedColor = (Color)ColorConverter.ConvertFromString(Plugin.Settings.FlagsRgb["CheckeredFlagRgb"]);
+            GreenFlagRgb.SelectedColor = (Color)ColorConverter.ConvertFromString(Plugin.Settings.FlagsRgb["GreenFlagRgb"]);
+            OrangeFlagRgb.SelectedColor = (Color)ColorConverter.ConvertFromString(Plugin.Settings.FlagsRgb["OrangeFlagRgb"]);
+            WhiteFlagRgb.SelectedColor = (Color)ColorConverter.ConvertFromString(Plugin.Settings.FlagsRgb["WhiteFlagRgb"]);
+            YellowFlagRgb.SelectedColor = (Color)ColorConverter.ConvertFromString(Plugin.Settings.FlagsRgb["YellowFlagRgb"]);
+            NoFlagRgb.SelectedColor = (Color)ColorConverter.ConvertFromString(Plugin.Settings.FlagsRgb["NoFlagRgb"]);
 
             if (Plugin.Settings.WledControlEnabled)
             {
@@ -117,26 +109,6 @@ namespace sjdawson.GentlemanDriverPlugin
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
-        }
-
-        private void UpdateLight(string data)
-        {
-            var httpRequest = (HttpWebRequest)WebRequest.Create(string.Format("http://{0}/json", WledIp.Text));
-            httpRequest.Method = "POST";
-
-            httpRequest.Accept = "application/json";
-            httpRequest.ContentType = "application/json";
-
-            using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
-            {
-                streamWriter.Write(data);
-            }
-
-            var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-            }
         }
 
         private void CheckConnection()
@@ -165,6 +137,9 @@ namespace sjdawson.GentlemanDriverPlugin
                     "GrayBrush5"
                 );
 
+                WledControlPanelLink.NavigateUri = new Uri(string.Format("http://{0}", WledIp.Text));
+                WledControlPanelLinkContainer.Visibility = Visibility.Visible;
+
                 Plugin.Settings.WledLedCount = (int)connectionStatus.SelectToken("info.leds.count");
             }
             catch (Exception ex)
@@ -177,6 +152,7 @@ namespace sjdawson.GentlemanDriverPlugin
 
                 Plugin.Settings.WledControlEnabled = false;
                 WledControlEnabled.IsChecked = false;
+                WledControlPanelLinkContainer.Visibility = Visibility.Hidden;
 
                 SimHub.Logging.Current.Error(ex.Message);
             }
@@ -187,6 +163,17 @@ namespace sjdawson.GentlemanDriverPlugin
             WledStatusMessage.Foreground = (Brush)Application.Current.FindResource(brush);
             WledStatusMessage.FontWeight = weight;
             WledStatusMessage.Text = message;
+        }
+
+        private void FlagRgb_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            ColorPicker picker = (ColorPicker)sender;
+
+            Plugin.Settings.FlagsRgb[picker.Name] = e.NewValue.ToString();
+
+            // Test the colour by pinging a packet to WLED
+            var colour = System.Drawing.ColorTranslator.FromHtml(e.NewValue.ToString());
+            WledControl.sendWarlsPacket(Plugin.Settings.WledLedCount, colour.R, colour.G, colour.B);
         }
     }
 }

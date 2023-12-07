@@ -8,15 +8,15 @@ namespace sjdawson.GentlemanDriverPlugin
         public int WledLedCount = 0;
         public string WledIp = "";
 
-        public Dictionary<string, string> FlagsJson = new Dictionary<string, string> {
-            { "BlackFlagJson", "{\"bri\": 255, \"seg\": [{\"col\": [[255,255,255], [0,0,0]], \"pal\": 2, \"fx\": 1, \"sx\": 220, \"ix\": 120}]}" },
-            { "BlueFlagJson", "{\"bri\": 255, \"seg\": [{\"col\": [[0,0,255], [0,0,0]], \"pal\": 2, \"fx\": 1, \"sx\": 200, \"ix\": 120}]}" },
-            { "CheckeredFlagJson", "{\"bri\": 255, \"seg\": [{\"col\": [[255,255,255], [0,0,0]], \"pal\": 2, \"fx\": 50, \"sx\": 100, \"ix\": 50}]}" },
-            { "GreenFlagJson", "{\"bri\": 255, \"seg\": [{\"col\": [[0,255,0]], \"pal\": 2, \"fx\": 0}]}" },
-            { "OrangeFlagJson", "{\"bri\": 255, \"seg\": [{\"col\": [[255,130,0]], \"pal\": 2, \"fx\": 0}]}" },
-            { "WhiteFlagJson", "{\"bri\": 255, \"seg\": [{\"col\": [[255,255,255]], \"pal\": 2, \"fx\": 0}]}" },
-            { "YellowFlagJson", "{\"bri\": 255, \"seg\": [{\"col\": [[255,200,0]], \"pal\": 2, \"fx\": 0}]}" },
-            { "NoFlagJson", "{\"bri\": 255, \"seg\": [{\"col\": [[0,0,0]], \"pal\": 2, \"fx\": 0}]}" }
+        public Dictionary<string, string> FlagsRgb = new Dictionary<string, string> {
+            { "BlackFlagRgb", "#FF000000" },
+            { "BlueFlagRgb", "#FF0000FF" },
+            { "CheckeredFlagRgb", "#FFFFFFFF" },
+            { "GreenFlagRgb", "#FF00FF00" },
+            { "OrangeFlagRgb", "#FFFFA500" },
+            { "WhiteFlagRgb", "#FFFFFFFF" },
+            { "YellowFlagRgb", "#FFFFFF00" },
+            { "NoFlagRgb", "#FF000000" }
         };
 
         public Dictionary<string, Dictionary<string, int>> OptimalTyreTemps = new Dictionary<string, Dictionary<string, int>>
