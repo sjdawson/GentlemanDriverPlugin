@@ -6,8 +6,8 @@ namespace sjdawson.GentlemanDriverPlugin
     {
         public bool WledControlEnabled = false;
         public int WledLedCount = 0;
-        public string WledIp = "";
-        public int WledFps = 60;
+        public string WledIp = "127.0.0.1";
+        public int WledFps = 60; // @todo - make this configurable, 1 min, 120 max.
 
         public Dictionary<string, string> FlagsRgb = new Dictionary<string, string> {
             { "BlackFlagRgb", "#FF000000" },

@@ -70,10 +70,9 @@ namespace sjdawson.GentlemanDriverPlugin.Sections
 
         public static void sendWarlsPacket(int ledCount, int r, int g, int b)
         {
-            if (DateTimeOffset.Now.ToUnixTimeMilliseconds() <= (timeLastUdpPacketSent + msBetweenUdpPackets.TotalMilliseconds))
-            {
-                return;
-            }
+            // Only actually send the packet in line with the FPS count to avoid overloading the microcontroller running WLED.
+            if (DateTimeOffset.Now.ToUnixTimeMilliseconds() <= (timeLastUdpPacketSent + msBetweenUdpPackets.TotalMilliseconds)) { return; }
+
             timeLastUdpPacketSent = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
             var packetLength = 2 + (ledCount * 4); // 2 initial config bytes followed by $ledCount quads for the LEDs
