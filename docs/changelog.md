@@ -2,6 +2,17 @@
 
 ---
 
+### `v1.2.1` WLED rate limit
+
+A small bugfix and stability release, that limits the rate at which packets are
+sent to WLED to avoid overloading the receiver, and sets a default IP to avoid
+some errors that would show when the plugin is first installed.
+
+- FEAT: Rate limit the packets sent to WLED to 60 fps (configurable to follow)
+- BUGFIX: Set a default value for initial plugin install to avoid error on boot
+  
+---
+
 ### `v1.2.0` WLED switch to WARLS
 
 In this release, the WLED integration has been converted to use WLED's live mode by
