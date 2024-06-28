@@ -2,6 +2,19 @@
 
 ---
 
+### `v1.3.0` Additional pit properties
+
+Added a collection of new pit-related properties. The previous ten timings of your
+total pit lane (from pit lane entry to exit) and the previous ten timings of your
+pit box. These timings are then averaged into another new property.
+
+- [Added property Pits.Lane.AverageTime](/features/pits#pit-lane-average-time)
+- [Added property Pits.Lane.PreviousTime.XX](/features/pits#pit-lane-prepvious-times)
+- [Added property Pits.Box.AverageTime](/features/pits#pit-box-average-time)
+- [Added property Pits.Box.PreviousTime.XX](/features/pits#pit-box-previous-times)
+  
+---
+
 ### `v1.2.1` WLED rate limit
 
 A small bugfix and stability release, that limits the rate at which packets are

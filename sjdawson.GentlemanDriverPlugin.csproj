@@ -87,6 +87,7 @@
     <Compile Include="Sections\GameRunningDelayed.cs" />
     <Compile Include="Sections\Laps.cs" />
     <Compile Include="Sections\LaunchMode.cs" />
+    <Compile Include="Sections\Pits.cs" />
     <Compile Include="Sections\Session.cs" />
     <Compile Include="Sections\TyreCompound.cs" />
     <Compile Include="Sections\TyreTemps.cs" />
